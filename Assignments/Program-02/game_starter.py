@@ -1,3 +1,4 @@
+
 import random
 import abc
 
@@ -82,12 +83,9 @@ class Player(object):
     @Returns: None
     """
     def AddOpponents(self,opponent):
-        if not type(opponent) == list and not opponent.Name == self.Name:
-            self.Opponents[opponent.Name] = opponent
-        else:
-            for op in opponent:
-                if not op.Name == self.Name:
-                    self.Opponents[op.Name] = op
+        for op in opponent:
+            if not op.Name == self.Name:
+                self.Opponents[op.Name] = op
 
     """
     @Method: __str__
@@ -154,15 +152,14 @@ class Player(object):
         
         
     def RandomRoll(self):
-        Score = 0
+        Score = 0                    
         NumRolls = 0
         for i in range(random.randint(1,7)):
-            NumRolls += 1
-            roll = self.pig.Roll()
-            if roll == 0:
-                break
-            Score += roll
-        
+                NumRolls += 1              
+                roll = self.pig.Roll()
+                if roll == 0:
+                    break
+                self.TotalScore += roll
         return (Score,NumRolls)
 
             
@@ -252,8 +249,8 @@ class Game(object):
         while not self.WinnerExists():
             print(self)
             for name,PlayerObj in self.Players.items():
-                PlayerObj.Roll()
-       
+                 PlayerObj.Roll()
+                                                
     """
     @Method: WinnerExists
     @Description: Checks to see if a player has acheived the target score.
@@ -284,7 +281,6 @@ class Game(object):
     @Returns: None
     """   
     def UpdatePlayerOpponents(self):
-
         for name,PlayerObj in self.Players.items():
             PlayerObj.AddOpponents(self.Players.values())
 
